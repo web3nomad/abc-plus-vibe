@@ -1,0 +1,65 @@
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Editor folders
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node / frontend
+node_modules/
+dist/
+build/
+coverage/
+.cache/
+.next/
+.nuxt/
+*.log
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env*/
+
+# Java / JVM
+*.class
+*.jar
+*.war
+*.ear
+.target/
+
+# Go
+bin/
+*.test
+
+# Rust
+/target/
+Cargo.lock
+
+# Misc
+.env
+*.local
+.tmp/
+.temp/
+*.tmp
+
+# Mac metadata
+.AppleDouble
+.LSOverride
+Icon?
+
+# Archives
+*.zip
+*.tar
+*.tgz
+*.gz
+*.bz2
+*.7z
+
+# Logs
+logs/
+*.log*
