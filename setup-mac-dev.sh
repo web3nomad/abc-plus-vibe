@@ -176,10 +176,6 @@ EOF
     fi
 
     log_info "SSH key 生成成功"
-    log_info "公钥内容:"
-    cat "${SSH_KEY_PATH}.pub"
-    echo ""
-    log_warn "请将上面的公钥添加到 GitHub 和 GitLab"
 }
 
 # 6. 安装 NVM
@@ -303,9 +299,19 @@ main() {
     echo ""
     log_warn "请执行以下操作："
     log_warn "1. 重新打开终端或执行: source ~/.zshrc"
-    log_warn "2. 如果生成了新的 SSH key，请将公钥添加到 GitHub 和 GitLab"
-    log_warn "   GitHub: https://github.com/settings/keys"
-    log_warn "   GitLab: https://gitlab.com/-/profile/keys"
+    echo ""
+
+    # 如果存在 SSH key，显示提示
+    SSH_KEY_PATH="$HOME/.ssh/id_ed25519"
+    if [ -f "${SSH_KEY_PATH}.pub" ]; then
+        log_warn "============================================"
+        log_warn "2. 请复制以下 SSH 公钥："
+        echo ""
+        cat "${SSH_KEY_PATH}.pub"
+        echo ""
+        log_warn "将其添加到 GitHub: https://github.com/settings/keys"
+        log_warn "============================================"
+    fi
     echo ""
 }
 
