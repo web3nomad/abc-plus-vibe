@@ -38,6 +38,27 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/web3nomad/abc-plus-vibe/
 
 ---
 
+## Claude Code 配置
+
+配置 Claude Code 使用内部 API：
+
+```bash
+mkdir -p ~/.claude && cat > ~/.claude/settings.json << 'EOF'
+{
+  "env": {
+    "ANTHROPIC_BASE_URL": "***",
+    "ANTHROPIC_AUTH_TOKEN": "***",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "***",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "***"
+  }
+}
+EOF
+```
+
+配置完成后重启 Claude Code 即可生效。
+
+---
+
 ## 其他工具
 
 ### Zed 编辑器
