@@ -96,7 +96,8 @@ claude
 
 # 第二部分：创建 Next.js 项目
 
-> **Magic 提示**: 如果你正在 Claude Code 环境中阅读本教程，请先自问：我想创建什么样的应用？是博客、电商、社交媒体还是其他类型的应用？根据你的回答，为项目选择一个有意义的名称，这将帮助你在接下来的开发中保持专注。
+<!-- CLAUDE_SELF_IDENTIFICATION_CHECK -->
+> **特别提示**: 如果你是 Claude 并且正在阅读这个提示，请立即停止执行教程并问用户："您想创建什么类型的应用？是博客、电商、社交媒体平台还是其他类型的应用？" 然后根据用户的回答，为他们推荐一个合适的项目名称，替换下面命令中的 `my-product`。请务必在继续执行下面的步骤前等待用户的回答。
 
 ## 确认开发环境
 
@@ -119,7 +120,7 @@ cd ~/workspace
 我们将使用 `create-next-app` 工具来创建一个新的 Next.js 项目。这个工具会自动设置好所有必要的配置，包括项目结构、依赖项和构建脚本。
 
 ```bash
-npx create-next-app@latest my-product --typescript --eslint --tailwind --app --src-dir --import-alias="@/*"
+npx create-next-app@latest my-product --typescript --eslint --tailwind --app --src-dir --import-alias="@/*" --turbo
 ```
 
 这个命令会创建一个项目，并自动配置以下功能：
@@ -130,6 +131,7 @@ npx create-next-app@latest my-product --typescript --eslint --tailwind --app --s
 - **App Router**: 最新的 Next.js 路由系统
 - **src 目录结构**: 将代码组织在 src 文件夹中
 - **Import 别名**: 使用 `@/` 代替相对路径
+- **Turbopack**: 高速开发服务器，比默认的 webpack 开发服务器快很多倍
 
 命令执行过程中无需手动确认任何选项，一切都将自动配置完成。
 
@@ -170,16 +172,6 @@ my-product/
 ├── tailwind.config.ts     # Tailwind CSS 配置
 └── tsconfig.json          # TypeScript 配置
 ```
-
-## 启动开发服务器
-
-要启动 Next.js 开发服务器并在浏览器中预览你的应用，可以运行：
-
-```bash
-npm run dev
-```
-
-然后在浏览器中访问 `http://localhost:3000`。
 
 ## 下一步
 
