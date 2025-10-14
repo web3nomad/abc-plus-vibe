@@ -80,33 +80,6 @@ claude
 > cd ~/workspace/abc-plus-vibe
 > ```
 
-## 常见问题及解决方法
-
-### 1. "command not found"错误
-
-如果你看到"command not found"错误，说明相关软件还没有安装。你可能需要：
-
-- 安装Git: [https://git-scm.com/downloads](https://git-scm.com/downloads)
-- 安装Claude: `npm install -g @anthropic/claude`（需要先安装Node.js）
-
-### 2. Git克隆失败
-
-如果git clone命令失败，可能是因为：
-
-- SSH密钥未设置（使用HTTPS链接克隆可以解决）
-- 网络连接问题
-- GitHub服务器暂时不可用
-
-### 3. 如何确认操作成功
-
-你可以使用`ls`命令查看当前目录下的文件和文件夹：
-
-```bash
-ls
-```
-
-在成功克隆项目后，应该能看到项目的文件和文件夹。
-
 ## 下一步
 
 成功设置环境后，我们将：
