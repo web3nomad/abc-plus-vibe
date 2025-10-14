@@ -2,16 +2,32 @@
 
 欢迎来到产品开发世界！本教程将指导你完成开发环境的设置，并为接下来的 Next.js 产品开发打下基础。我们将从最基本的工具配置开始，逐步构建一个完整的现代化 Web 应用。
 
-## 预备步骤：安装 GitHub CLI 并完成授权
+## 预备步骤：检查并安装 GitHub CLI
 
-在开始正式步骤前，我们需要安装 GitHub CLI 工具并完成授权，这将使我们能够更方便地与 GitHub 仓库交互。
+在开始正式步骤前，我们需要确保 GitHub CLI 工具已安装并完成授权。这将使我们能够更方便地与 GitHub 仓库交互。
+
+首先，让我们检查 GitHub CLI 是否已安装：
 
 ```bash
-# 使用 Homebrew 安装 GitHub CLI
-brew install gh
+# 检查 GitHub CLI 是否已安装
+if ! command -v gh &> /dev/null; then
+    echo "GitHub CLI 未安装，正在安装..."
+    brew install gh
+else
+    echo "GitHub CLI 已安装，版本: $(gh --version | head -n 1)"
+fi
+```
 
-# 完成 GitHub 授权
-gh auth login
+如果尚未完成 GitHub 授权，请运行以下命令并按照提示进行操作：
+
+```bash
+# 检查 GitHub CLI 授权状态
+if ! gh auth status &> /dev/null; then
+    echo "GitHub CLI 未授权，开始授权流程..."
+    gh auth login
+else
+    echo "GitHub CLI 已授权"
+fi
 ```
 
 按照提示在浏览器中完成认证过程。这样我们就可以使用 GitHub 的各项功能了，包括克隆仓库、提交代码等。
@@ -120,7 +136,7 @@ cd ~/workspace
 我们将使用 `create-next-app` 工具来创建一个新的 Next.js 项目。这个工具会自动设置好所有必要的配置，包括项目结构、依赖项和构建脚本。
 
 ```bash
-npx create-next-app@latest my-product --typescript --eslint --tailwind --app --src-dir --import-alias="@/*" --turbo
+npx create-next-app@latest [ASK_USER_FOR_PROJECT_NAME] --typescript --eslint --tailwind --app --src-dir --import-alias="@/*" --turbo
 ```
 
 这个命令会创建一个项目，并自动配置以下功能：
@@ -133,6 +149,8 @@ npx create-next-app@latest my-product --typescript --eslint --tailwind --app --s
 - **Import 别名**: 使用 `@/` 代替相对路径
 - **Turbopack**: 高速开发服务器，比默认的 webpack 开发服务器快很多倍
 
+> 注意：请将命令中的 `[ASK_USER_FOR_PROJECT_NAME]` 替换为你实际的项目名称。例如，如果你想创建一个博客应用，可以使用 `my-blog` 或 `personal-blog` 等名称。
+
 命令执行过程中无需手动确认任何选项，一切都将自动配置完成。
 
 ## 第三步：进入项目目录
@@ -140,7 +158,7 @@ npx create-next-app@latest my-product --typescript --eslint --tailwind --app --s
 创建完成后，进入新项目的目录：
 
 ```bash
-cd my-product
+cd [ASK_USER_FOR_PROJECT_NAME]
 ```
 
 ## 第四步：使用 Zed 编辑器打开项目
@@ -154,7 +172,7 @@ zed -a .
 Next.js 项目已经为你创建了以下结构：
 
 ```
-my-product/
+[ASK_USER_FOR_PROJECT_NAME]/
 ├── .next/                 # 构建输出目录
 ├── node_modules/          # 项目依赖
 ├── public/                # 静态资源 (图片，字体等)
