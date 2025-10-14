@@ -37,8 +37,6 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/web3nomad/abc-plus-vibe/
 
 **注意**: 卸载脚本会删除 Homebrew 和所有通过它安装的软件，但会保留 SSH keys 和 Xcode CLT。
 
----
-
 ## Claude Code 配置
 
 配置 Claude Code 使用内部 API：
@@ -57,3 +55,32 @@ EOF
 ```
 
 配置完成后重启 Claude Code 即可生效。
+
+## Zed 编辑器 Context7 MCP Server 配置
+
+安装 Context7 MCP Server 来让 Zed 获取最新的文档信息，请按照以下步骤操作：
+
+1. 打开 Zed 编辑器
+2. 使用快捷键 `Cmd+,` 打开设置，会直接打开 `settings.json` 文件
+3. 将以下配置粘贴到文件的 `{}` 中：
+
+```json
+{
+  // 以下是新增的 MCP server 配置
+  "context_servers": {
+    "mcp-server-context7": {
+      "source": "extension",
+      "enabled": true,
+      "settings": {
+        "context7_api_key": ""
+      }
+    }
+  }
+
+  // 文件其他部分
+}
+```
+
+4. 保存设置文件
+
+配置完成后，Zed 编辑器将能够通过 Context7 MCP Server 获取最实时的文档信息，提供更准确的 AI 辅助开发体验。

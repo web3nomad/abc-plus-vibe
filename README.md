@@ -6,8 +6,10 @@
 
 本项目包含以下文档，可以帮助您开始：
 
-- [MacOS 开发环境配置指南](./MacOS-Setup-Guide.md) - 详细介绍了如何在 Mac 上快速配置开发环境，包括安装必要的工具和软件。
+- [Mac 开发环境配置指南](./docs/mac-setup.md) - 详细介绍了如何在 Mac 上快速配置开发环境，包括安装必要的工具和软件。
 
-- [编程环境设置教程](./Tutorial.md) - 为初学者提供的逐步指南，介绍了如何准备工作目录、克隆代码、设置开发环境等基础知识。
+- [Claude 技术指南](./docs/tech-guide.md) - 为 Claude Code 提供的技术栈指导和开发约束规范。
+
+- [Claude 教程](./docs/claude-tutorial.md) - Claude Code 内部指导文档，用于引导用户完成开发环境设置和 Next.js 项目创建。
 
 希望这些资源对您的开发之旅有所帮助！
