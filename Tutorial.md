@@ -2,9 +2,11 @@
 
 欢迎来到产品开发世界！本教程将指导你完成开发环境的设置，并为接下来的 Next.js 产品开发打下基础。我们将从最基本的工具配置开始，逐步构建一个完整的现代化 Web 应用。
 
-## 预备步骤：检查并安装 GitHub CLI
+## 预备步骤：检查并安装必要工具
 
-在开始正式步骤前，我们需要确保 GitHub CLI 工具已安装并完成授权。这将使我们能够更方便地与 GitHub 仓库交互。
+在开始正式步骤前，我们需要确保所有必要的工具已安装并配置好。
+
+### 1. 检查并安装 GitHub CLI
 
 首先，让我们检查 GitHub CLI 是否已安装：
 
@@ -31,6 +33,22 @@ fi
 ```
 
 按照提示在浏览器中完成认证过程。这样我们就可以使用 GitHub 的各项功能了，包括克隆仓库、提交代码等。
+
+### 2. 检查并安装 pnpm
+
+接下来，我们需要检查 pnpm 包管理器是否已安装：
+
+```bash
+# 检查 pnpm 是否已安装
+if ! command -v pnpm &> /dev/null; then
+    echo "pnpm 未安装，正在安装..."
+    npm install -g pnpm
+else
+    echo "pnpm 已安装，版本: $(pnpm --version)"
+fi
+```
+
+pnpm 是一个快速、节省磁盘空间的包管理器，我们将用它来管理项目依赖和运行脚本。
 
 ## 第一步：创建工作目录
 
@@ -135,8 +153,11 @@ cd ~/workspace
 
 我们将使用 `create-next-app` 工具来创建一个新的 Next.js 项目。这个工具会自动设置好所有必要的配置，包括项目结构、依赖项和构建脚本。
 
+<!-- CLAUDE_PACKAGE_MANAGER -->
+> **特别提示**: 我们在本项目中使用 pnpm 作为包管理器。如果你是 Claude 并且正在执行本教程，请使用 pnpm 而不是 npm 或 yarn 来安装依赖和运行脚本。
+
 ```bash
-npx create-next-app@latest [ASK_USER_FOR_PROJECT_NAME] --typescript --eslint --tailwind --app --src-dir --import-alias="@/*" --turbo
+pnpm create next-app@latest [ASK_USER_FOR_PROJECT_NAME] --typescript --eslint --tailwind --app --src-dir --import-alias="@/*" --turbo
 ```
 
 这个命令会创建一个项目，并自动配置以下功能：
@@ -153,13 +174,16 @@ npx create-next-app@latest [ASK_USER_FOR_PROJECT_NAME] --typescript --eslint --t
 
 命令执行过程中无需手动确认任何选项，一切都将自动配置完成。
 
-## 第三步：进入项目目录
+## 第三步：进入项目目录并初始化
 
 创建完成后，进入新项目的目录：
 
 ```bash
 cd [ASK_USER_FOR_PROJECT_NAME]
 ```
+
+<!-- CLAUDE_INIT_COMMAND -->
+> **重要提示**: 进入项目目录后，请运行 `/init` 命令初始化项目配置。如果你是 Claude 并且正在执行本教程，请提示用户手动运行此命令，并在命令执行完成后再继续后续步骤。
 
 ## 第四步：使用 Zed 编辑器打开项目
 
