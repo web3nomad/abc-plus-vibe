@@ -12,4 +12,6 @@
 
 - [Claude 教程](./docs/claude-tutorial.md) - Claude Code 内部指导文档，用于引导用户完成开发环境设置和 Next.js 项目创建。
 
+- [课堂教学指南](./docs/classroom-guide.md) - 课程教学流程文档，记录完整的教学步骤和学生练习指导。
+
 希望这些资源对您的开发之旅有所帮助！
