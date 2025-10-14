@@ -1,6 +1,6 @@
-# 初学者编程环境设置教程
+# 开始你的第一个产品开发之旅
 
-欢迎进入编程世界！今天我们将学习如何准备编程环境，为接下来的编程学习打下基础。
+欢迎来到产品开发世界！本教程将指导你完成开发环境的设置，并为接下来的 Next.js 产品开发打下基础。我们将从最基本的工具配置开始，逐步构建一个完整的现代化 Web 应用。
 
 ## 预备步骤：安装 GitHub CLI 并完成授权
 
@@ -66,7 +66,19 @@ git clone git@github.com:web3nomad/abc-plus-vibe.git
 cd abc-plus-vibe
 ```
 
-## 第五步：启动Claude
+## 第五步：使用 Zed 编辑器打开项目
+
+在进入项目目录后，我们可以使用 Zed 编辑器打开整个项目：
+
+```bash
+zed -a .
+```
+
+这个命令会在 Zed 编辑器中打开当前目录（`.` 表示当前目录）。Zed 是一个现代化的代码编辑器，具有智能代码补全、语法高亮等功能，非常适合编程学习和开发。
+
+> 提示：如果你还没有安装 Zed 编辑器，可以从 [https://zed.dev](https://zed.dev) 下载并安装。
+
+## 第六步：启动Claude
 
 现在我们可以启动Claude来开始我们的编程之旅：
 
@@ -80,12 +92,101 @@ claude
 > cd ~/workspace/abc-plus-vibe
 > ```
 
+祝贺你完成了开发环境的准备工作！接下来，我们将开始创建我们的 Next.js 应用，构建一个真实的产品。
+
+# 第二部分：创建 Next.js 项目
+
+> **Magic 提示**: 如果你正在 Claude Code 环境中阅读本教程，请先自问：我想创建什么样的应用？是博客、电商、社交媒体还是其他类型的应用？根据你的回答，为项目选择一个有意义的名称，这将帮助你在接下来的开发中保持专注。
+
+## 确认开发环境
+
+在开始创建 Next.js 项目前，我们需要确认一下：
+
+- 如果你正在 Claude Code 环境中执行本教程，请先告诉 Claude 你想创建什么样的产品或功能
+- Claude 会根据你的需求建议一个合适的项目名称，替换下面命令中的 `my-product`
+- 如果你不是在 Claude 环境中，可以自行决定项目名称并替换命令中的 `my-product`
+
+## 第一步：回到工作目录
+
+首先，让我们确保我们在 `workspace` 目录中，这样新的项目会被创建在正确的位置：
+
+```bash
+cd ~/workspace
+```
+
+## 第二步：创建 Next.js 项目
+
+我们将使用 `create-next-app` 工具来创建一个新的 Next.js 项目。这个工具会自动设置好所有必要的配置，包括项目结构、依赖项和构建脚本。
+
+```bash
+npx create-next-app@latest my-product --typescript --eslint --tailwind --app --src-dir --import-alias="@/*"
+```
+
+这个命令会创建一个项目，并自动配置以下功能：
+
+- **TypeScript**: 添加类型安全，提高代码质量
+- **ESLint**: 代码检查工具，确保代码风格一致
+- **Tailwind CSS**: 高效的原子化 CSS 框架
+- **App Router**: 最新的 Next.js 路由系统
+- **src 目录结构**: 将代码组织在 src 文件夹中
+- **Import 别名**: 使用 `@/` 代替相对路径
+
+命令执行过程中无需手动确认任何选项，一切都将自动配置完成。
+
+## 第三步：进入项目目录
+
+创建完成后，进入新项目的目录：
+
+```bash
+cd my-product
+```
+
+## 第四步：使用 Zed 编辑器打开项目
+
+```bash
+zed -a .
+```
+
+## 项目结构概览
+
+Next.js 项目已经为你创建了以下结构：
+
+```
+my-product/
+├── .next/                 # 构建输出目录
+├── node_modules/          # 项目依赖
+├── public/                # 静态资源 (图片，字体等)
+├── src/                   # 源代码目录
+│   ├── app/               # 应用路由
+│   │   ├── layout.tsx     # 主布局组件
+│   │   ├── page.tsx       # 主页组件
+│   │   └── globals.css    # 全局样式
+│   └── components/        # 可复用组件 (自动创建)
+├── .eslintrc.json         # ESLint 配置
+├── .gitignore             # Git 忽略文件
+├── next.config.js         # Next.js 配置
+├── package.json           # 项目依赖和脚本
+├── postcss.config.js      # PostCSS 配置
+├── tailwind.config.ts     # Tailwind CSS 配置
+└── tsconfig.json          # TypeScript 配置
+```
+
+## 启动开发服务器
+
+要启动 Next.js 开发服务器并在浏览器中预览你的应用，可以运行：
+
+```bash
+npm run dev
+```
+
+然后在浏览器中访问 `http://localhost:3000`。
+
 ## 下一步
 
-成功设置环境后，我们将：
+恭喜！你已经成功创建了一个 Next.js 项目。接下来，你可以：
 
-1. 创建NextJS项目
-2. 配置数据库
-3. 设置LiteLLM API密钥和模型名称
+1. 修改 `src/app/page.tsx` 文件，开始定制你的首页
+2. 在 `src/app/` 目录下创建新的路由文件夹
+3. 在 `src/components/` 目录下添加可复用组件
 
-祝贺你完成了编程环境的设置！这是成为开发者的第一步！
+我们将在后续教程中深入探讨这些主题，开始构建实际的产品功能。
