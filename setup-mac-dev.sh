@@ -255,6 +255,22 @@ install_node() {
     log_info "当前 npm 版本: $(npm -v)"
 }
 
+# 8. 安装 GitHub CLI
+install_gh_cli() {
+    log_info "检查并安装 GitHub CLI..."
+
+    if command -v gh &> /dev/null; then
+        log_info "GitHub CLI 已安装，版本: $(gh --version | head -n 1)"
+    else
+        log_info "通过 Homebrew 安装 GitHub CLI..."
+        brew install gh || {
+            log_error "GitHub CLI 安装失败"
+            return 1
+        }
+        log_info "GitHub CLI 安装成功"
+    fi
+}
+
 # 主函数
 main() {
     log_info "开始配置 Mac 开发环境..."
@@ -293,12 +309,16 @@ main() {
     install_node || log_warn "Node.js 安装失败，继续执行..."
     echo ""
 
+    # 8. 安装 GitHub CLI
+    install_gh_cli || log_warn "GitHub CLI 安装失败，继续执行..."
+    echo ""
+
     log_info "==================================="
     log_info "Mac 开发环境配置完成！"
     log_info "==================================="
     echo ""
     log_warn "请执行以下操作："
-    log_warn "1. 重新打开终端或执行: source ~/.zshrc"
+    log_warn "1. 在当前终端里执行: source ~/.zshrc"
     echo ""
 
     # 如果存在 SSH key，显示提示
@@ -311,7 +331,14 @@ main() {
         echo ""
         log_warn "将其添加到 GitHub: https://github.com/settings/keys"
         log_warn "============================================"
+        echo ""
     fi
+
+    # 添加 GitHub CLI 认证提示
+    log_warn "3. 请运行以下命令完成 GitHub CLI 认证："
+    log_warn "   gh auth login"
+    log_warn "   然后按照提示在浏览器中完成 GitHub 账号认证"
+    log_warn "============================================"
     echo ""
 }
 
