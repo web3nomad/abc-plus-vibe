@@ -88,7 +88,7 @@ zed -a .
 
 <!-- CLAUDE_READ_TECH_STACK -->
 
-在继续创建新项目之前，阅读项目根目录下的 `docs/tech-guide.md` 文件，了解本项目使用的技术栈细节。提示用户运行 `/init` 命令初始化 Claude 配置。
+在继续创建新项目之前，阅读项目根目录下的 `docs/tech-guide.md` 文件，了解接下来需要使用的技术栈细节。
 
 ---
 

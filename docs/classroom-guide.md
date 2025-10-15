@@ -34,6 +34,27 @@ Claude Code 会按照教程指导学生：
 
 此命令会在 Claude 中执行，用于创建项目的 `CLAUDE.md` 文件。这是项目的 Claude 工作指南，告诉 Claude 应该如何与你协作。你所有的开发需求、项目规范、代码风格等要求都可以放在这个文件里，Claude 会根据这个指南来协助你完成开发工作。
 
+### 步骤 3：合并技术栈指南到 CLAUDE.md
+
+在创建完基础的 `CLAUDE.md` 文件后，学生可以进一步完善这个文件，将技术栈指南合并进去：
+
+```
+请帮我将以下技术指南合并到项目的 CLAUDE.md 文件中，作为技术栈和开发规范部分：
+
+https://raw.githubusercontent.com/web3nomad/abc-plus-vibe/refs/heads/main/docs/tech-guide.md
+
+请保持现有的 CLAUDE.md 内容，将技术指南作为新的章节添加进去，形成一个完整的项目开发指南。
+```
+
+Claude Code 会：
+
+1. 读取远程的技术指南内容
+2. 将其整合到现有的 `CLAUDE.md` 文件中
+3. 保持良好的文档结构和格式
+4. 确保技术规范与项目配置一致
+
+**教学意义**：让学生学会如何维护和完善项目文档，将分散的技术资料整合到一个统一的指南中。
+
 ---
 
 ## 第二部分：AI SDK 配置和聊天界面
@@ -78,7 +99,7 @@ OPENAI_API_KEY=待上课时候补充
 pnpm add ai @ai-sdk/openai-compatible
 ```
 
-2. 在 Zed 中创建 `.env.local` 文件，添加环境变量
+2. 在 Zed 中创建 `.env` 文件，添加环境变量
 
 3. 使用 Zed 的 AI 助手功能来帮助编写聊天界面代码
 
@@ -102,6 +123,14 @@ pnpm add ai @ai-sdk/openai-compatible
 
 ```
 请帮我规划一下现在没有提交的文件，每个提交应该包含一个独立的功能，然后逐个提交。
+
+完成本地提交后，请使用 GitHub CLI 为我创建一个在线仓库，并将代码推送到 GitHub 上。
+
+创建仓库时请使用以下配置：
+- 仓库名称：根据项目名称自动生成
+- 设置为 public 仓库
+- 自动设置 remote origin
+- 立即推送所有已提交的代码
 ```
 
 Claude Code 会：
@@ -110,10 +139,33 @@ Claude Code 会：
 2. 将文件按功能分组
 3. 为每个提交创建有意义的提交信息
 4. 逐个执行提交命令
+5. 使用 GitHub CLI 创建在线仓库：
+   ```bash
+   gh repo create [项目名称] --public --source=. --remote=origin --push
+   ```
+6. 验证代码是否成功推送到 GitHub
+7. 提供 GitHub 仓库链接给学生查看
 
-### 步骤 5：测试功能
+### 步骤 5：创建 GitHub 仓库并推送
 
-提交完成后，测试聊天功能：
+这个步骤演示如何将本地代码发布到 GitHub：
+
+1. **使用 GitHub CLI 创建仓库**：
+   - 自动根据项目名称创建仓库
+   - 设置为公开仓库，便于分享和展示
+   - 自动配置远程仓库地址
+   - 立即推送所有提交的代码
+
+2. **验证发布结果**：
+   - 检查所有文件是否成功上传
+   - 确认提交历史完整保留
+   - 获取可访问的 GitHub 仓库链接
+
+**教学重点**：让学生理解本地 Git 和远程 GitHub 的关系，学会将代码发布到互联网上
+
+### 步骤 6：测试功能
+
+代码推送完成后，测试聊天功能：
 
 1. 启动开发服务器：`pnpm dev`
 2. 访问首页，测试模型切换功能
@@ -124,15 +176,60 @@ Claude Code 会：
 
 ## 第四部分：实现核心功能
 
-### 步骤 6：配置数据库（可选扩展）
+### 步骤 7：配置 Supabase 数据库（可选扩展）
 
-如果后续需要数据库功能，学生可以输入：
+#### Supabase 配置教学流程
+
+**1. 创建 Supabase 项目**
+
+- 引导学生访问 https://supabase.com
+- 注册/登录账户
+- 创建新项目
+- 设置项目名称和数据库密码
+
+**2. 获取数据库连接信息**
+
+- 在 Supabase 项目详情页上方点击 "Connect" 按钮
+- 选择 "ORMs" 选项
+- 选择 "Prisma"
+- 复制提供的两个连接字符串
+
+**3. 配置项目环境变量**
+
+- 在 `.env` 文件中添加：
 
 ```
-帮我安装一下 postgresql，创建一个用户和数据库，配置到项目中，并且在项目中配置 prisma，使用刚创建的数据库。
+# Connect to Supabase via connection pooling
+DATABASE_URL="postgresql://postgres.[PROJECT_ID]:[YOUR-PASSWORD]@aws-1-us-east-2.pooler.supabase.com:6543/postgres?pgbouncer=true"
+
+# Direct connection to the database. Used for migrations
+DIRECT_URL="postgresql://postgres.[PROJECT_ID]:[YOUR-PASSWORD]@aws-1-us-east-2.pooler.supabase.com:5432/postgres"
 ```
 
-### 步骤 7：实现音频素材库
+#### Prisma 集成教学流程
+
+当学生已经创建了 Supabase 数据库并获得了连接字符串后，需要在项目中集成 Prisma ORM。
+
+学生在 Claude Code 中输入：
+
+```
+现在我已经创建好了 Supabase 数据库并获得了连接信息 (DATABASE_URL 和 DIRECT_URL)，并配置在 .env 文件中。
+
+请按照 Prisma 推荐的 Next.js 项目集成步骤：
+1. 安装依赖并初始化
+2. 配置 schema.prisma 文件
+3. 创建用户模型
+4. 同步数据库并生成客户端
+
+然后实现一个简单的用户管理系统：
+- 姓名和邮箱输入表单
+- 保存用户信息到数据库
+- 页面显示用户列表
+
+使用 Server Actions 演示数据库操作。
+```
+
+### 步骤 8：实现音频素材库
 
 学生输入以下完整需求：
 
