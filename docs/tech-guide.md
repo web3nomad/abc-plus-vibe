@@ -4,7 +4,51 @@
 
 ## 项目概述
 
-本项目是使用现代化前端技术栈构建的 Next.js 应用程序。作为开发助手，你应当遵循以下技术约定和最佳实践。
+本项目是使用现代化前端技术栈构建的 Next.js 应用程序，主要为 AI Persona Chat application。
+
+**技术栈**: Next.js 15, React 19, TypeScript, TailwindCSS 4, Prisma ORM, Supabase PostgreSQL, Vercel AI SDK v5
+
+## 开发命令
+
+### 基础开发命令
+
+```bash
+# 启动开发服务器（使用 Turbopack）
+pnpm dev
+
+# 运行代码检查
+pnpm lint
+
+# 全面检查（推荐：完成功能后运行）
+pnpm build
+```
+
+### 数据库操作
+
+```bash
+# 生成 Prisma 客户端
+npx prisma generate
+
+# 运行数据库迁移（开发环境）
+npx prisma migrate dev
+
+# 打开 Prisma Studio GUI
+npx prisma studio
+```
+
+## 环境配置
+
+项目需要配置以下环境变量：
+
+```bash
+# AI API 配置
+OPENAI_BASE_URL="https://your-api-endpoint"
+OPENAI_API_KEY="sk-your-key"
+
+# 数据库配置
+DATABASE_URL="postgresql://..."     # Supabase PostgreSQL 连接字符串
+DIRECT_URL="postgresql://..."       # 用于迁移的直连数据库连接
+```
 
 ## 1. 包管理器: pnpm
 
@@ -31,6 +75,7 @@
 - 不需要本地安装 PostgreSQL，使用 Supabase 云服务
 - 配置 DATABASE_URL 和 DIRECT_URL 用于连接池和直连
 - 只需安装 prisma 和 @prisma/client，无需 @supabase/supabase-js
+- Prisma 客户端生成到 `src/generated/prisma/` (自定义输出位置)
 
 ## 3. UI 组件库: shadcn/ui
 
@@ -44,17 +89,137 @@
 - 新组件应采用相同的设计语言和模式
 - 不要引入其他 UI 组件库，如 Material UI 或 Ant Design
 
-## 4. AI 功能: Vercel AI SDK
+## 4. AI 功能: Vercel AI SDK v5
 
 项目使用 **Vercel AI SDK v5** 集成 AI 功能，支持流式响应。
 
-**规范**:
+**重要说明**: 项目使用 Vercel AI SDK v5，不使用 v4 版本。v5 的 API 与 v4 有重要差异，必须使用 v5 的正确方法。
 
-- 使用 `ai`、`@ai-sdk/openai-compatible` 和 `@ai-sdk/react` 包
-- React 应用中的 hooks（如 `useChat`、`useCompletion`）需要从 `@ai-sdk/react` 导入
-- 使用项目提供的 OpenAI proxy 配置
-- 当创建 AI 相关功能时，遵循 Vercel AI SDK v5 的最新 API 规范
-- 优先使用流式响应模式提高用户体验
+### 依赖包安装
+
+```bash
+pnpm add ai @ai-sdk/openai-compatible @ai-sdk/react
+```
+
+### 正确用法要点 🚨
+
+#### 1. 消息格式转换 (正确用法)
+
+```typescript
+// ❌ 错误：直接使用 messages 会导致格式不匹配
+const result = streamText({ messages });
+
+// ✅ 正确：必须转换 UIMessage[] 为 ModelMessage[]
+import { convertToModelMessages } from "ai";
+const result = streamText({
+  messages: convertToModelMessages(messages), // 正确用法
+});
+```
+
+#### 2. 流响应方法 (正确用法)
+
+```typescript
+// ❌ 错误：这些方法不存在或不兼容 useChat
+result.toTextStreamResponse();
+result.toDataStreamResponse();
+
+// ✅ 正确：用于 useChat 集成的正确方法
+result.toUIMessageStreamResponse(); // 正确用法
+```
+
+#### 3. 客户端传输配置 (正确用法)
+
+```typescript
+// ❌ 错误：直接使用 api 参数无法正常工作
+const { messages, sendMessage } = useChat({
+  api: "/api/chat",
+});
+
+// ✅ 正确：使用 DefaultChatTransport
+import { DefaultChatTransport } from "ai";
+const { messages, sendMessage } = useChat({
+  transport: new DefaultChatTransport({
+    // 正确用法
+    api: "/api/chat",
+    body: { model: selectedModel },
+  }),
+});
+```
+
+#### 4. 状态处理 (API 变更)
+
+```typescript
+// ❌ 错误：v4 模式，v5 中不存在 isLoading
+const { messages, isLoading } = useChat();
+
+// ✅ 正确：v5 使用 status
+const { messages, status } = useChat();
+// status 可能值: 'ready', 'submitted', 'streaming'
+```
+
+#### 5. 消息结构 (API 变更)
+
+```typescript
+// ❌ 错误：v4 模式，v5 中不存在 message.content
+{
+  message.content;
+}
+
+// ✅ 正确：v5 使用 parts 结构
+{
+  message.parts
+    .filter((part) => part.type === "text")
+    .map((part) => part.text)
+    .join("");
+}
+```
+
+### 工作模板
+
+**API 路由模板** (`src/app/api/chat/route.ts`):
+
+```typescript
+import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
+import { streamText, convertToModelMessages } from "ai";
+
+export const runtime = "edge";
+
+const ai = createOpenAICompatible({
+  name: "OpenAI Compatible",
+  baseURL: process.env.OPENAI_BASE_URL!,
+  apiKey: process.env.OPENAI_API_KEY!,
+});
+
+export async function POST(req: Request) {
+  const { messages, model = "gpt-5" } = await req.json();
+
+  const result = streamText({
+    model: ai(model),
+    messages: convertToModelMessages(messages), // 正确用法
+    maxOutputTokens: 4000,
+    temperature: 0.7,
+  });
+
+  return result.toUIMessageStreamResponse(); // 正确用法
+}
+```
+
+**客户端组件模板**:
+
+```typescript
+import { useChat } from "@ai-sdk/react";
+import { DefaultChatTransport } from "ai"; // 正确用法
+
+const { messages, sendMessage, status } = useChat({
+  transport: new DefaultChatTransport({
+    // 正确用法
+    api: "/api/chat",
+    body: { model: selectedModel },
+  }),
+});
+```
+
+**支持的 AI 模型**: gpt-5, gpt-5-mini, gpt-5-nano, claude-sonnet-4
 
 ## 5. 服务端功能: Server Actions
 
@@ -67,6 +232,42 @@
 - 遵循 React 表单与 Server Actions 集成的最佳实践
 - 结合 Prisma 进行数据库操作
 
+## 文档查阅协议
+
+在使用 AI SDK 或任何外部库时，遵循以下协议：
+
+1. **使用 Context7 MCP**: 通过 `resolve-library-id` 和 `get-library-docs` 查询最新文档
+2. **检查 API 变更**: SDK 版本更新频繁，始终验证当前模式
+3. **关注示例**: 查找官方文档中的可用代码示例
+4. **迁移指南**: 遇到弃用方法时检查迁移指南
+
+示例文档查询:
+
+```bash
+# 首先解析库 ID
+resolve-library-id: "vercel ai sdk"
+# 然后获取具体文档
+get-library-docs: "/vercel/ai" with topic "useChat streamText"
+```
+
+## 服务器组件与客户端组件选择策略
+
+### 默认选择：服务器组件
+
+- 展示静态内容
+- 数据获取和展示
+- SEO 重要的页面
+- 不需要用户交互的组件
+
+### 按需使用：客户端组件 ('use client')
+
+- 需要用户交互（按钮点击、表单输入）
+- 需要状态管理（useState、useReducer）
+- 需要浏览器 API（localStorage、geolocation 等）
+- 需要实时数据（useChat、WebSocket 等）
+
+**策略**：尽可能将客户端组件推到组件树的叶子节点，避免整个页面标记为客户端组件。
+
 ## 开发指导原则
 
 1. **类型安全**：始终利用 TypeScript 提供的类型系统，避免使用 `any` 类型。
@@ -74,15 +275,13 @@
 3. **性能优化**：注重组件渲染性能，避免不必要的重渲染。
 4. **可访问性**：确保组件符合 WCAG 可访问性标准。
 5. **响应式设计**：所有页面和组件应适配移动设备和桌面设备。
-6. **Supabase 数据库最佳实践**：
-   - 通过 Prisma 连接 Supabase PostgreSQL 数据库
-   - 使用连接池模式提高性能（DATABASE_URL）
-   - 使用直连模式进行数据库迁移（DIRECT_URL）
-   - 遵循 Prisma 最佳实践进行数据模型设计
+6. **日志输出**：复杂功能应该输出适当的日志信息，便于调试和监控，提醒用户关注控制台日志。
 
-## 其他注意事项
+## 开发注意事项
 
-- 避免过度使用客户端组件，尽可能使用服务器组件
-- 根据功能需求合理拆分组件和文件
-- 保持目录结构清晰，遵循项目现有的组织方式
-- 编写清晰的注释，特别是对于复杂逻辑和业务规则
+- **错误处理**: 提供清晰的错误消息，便于问题定位和用户理解
+- **组件拆分**: 避免过度使用客户端组件，尽可能使用服务器组件
+- **目录组织**: 根据功能需求合理拆分组件和文件，保持目录结构清晰
+- **注释规范**: 编写清晰的注释，特别是对于复杂逻辑和业务规则
+
+- **开发检查**: 完成功能后运行 `pnpm build` 进行全面检查，比单独的 `lint` 和 `tsc` 更全面

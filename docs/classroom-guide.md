@@ -281,7 +281,7 @@ Claude Code 会实现以下功能：
 - **Prisma**: 数据库操作使用 Prisma ORM
 - **Vercel AI SDK**: AI 功能使用 Vercel AI SDK v5
 - **shadcn/ui**: UI 组件使用 shadcn/ui 组件库
-- **文件存储**: 音频文件存储在 public/uploads 目录或使用云存储服务
+- **文件存储**: 音频文件存储在 public/uploads 目录
 ```
 
 ---
