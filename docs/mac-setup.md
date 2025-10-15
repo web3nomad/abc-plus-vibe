@@ -56,6 +56,18 @@ EOF
 
 配置完成后重启 Claude Code 即可生效。
 
+## Claude Code 配置 Context7 MCP Server
+
+看 https://github.com/upstash/context7?tab=readme-ov-file#claude-code-local-server-connection
+
+在**Terminal/终端**中运行以下命令
+
+```bash
+claude mcp add context7 -- npx -y @upstash/context7-mcp
+```
+
+安装好以后，运行 `claude` 输入 “查一下最新的 Vercel AI SDK” 的文档。
+
 ## Zed 编辑器 Context7 MCP Server 配置
 
 安装 Context7 MCP Server 来让 Zed 获取最新的文档信息，请按照以下步骤操作：
