@@ -76,8 +76,7 @@ Claude Code 会：
 
 1. 安装依赖包
 执行以下命令安装 Vercel AI SDK：
-- pnpm add ai
-- pnpm add @ai-sdk/openai-compatible
+- pnpm add ai @ai-sdk/openai-compatible @ai-sdk/react
 
 2. 配置环境变量
 在项目根目录创建 .env 文件，添加：
@@ -91,6 +90,8 @@ OPENAI_API_KEY=待上课时候补充
 - 添加模型选择器组件
 ```
 
+如果遇到问题，和 claude code 一起调试程序的方法：`请运行 pnpm build，并修复问题`
+
 #### 使用 Zed 的方式
 
 如果学生选择使用 Zed，可以：
@@ -98,7 +99,7 @@ OPENAI_API_KEY=待上课时候补充
 1. 在终端中手动安装依赖：
 
 ```bash
-pnpm add ai @ai-sdk/openai-compatible
+pnpm add ai @ai-sdk/openai-compatible @ai-sdk/react
 ```
 
 2. 在 Zed 中创建 `.env` 文件，添加环境变量
@@ -109,7 +110,7 @@ pnpm add ai @ai-sdk/openai-compatible
 
 完成后，学生将拥有：
 
-1. **AI SDK 依赖**：ai 和 @ai-sdk/openai-compatible 包
+1. **AI SDK 依赖**：ai、@ai-sdk/openai-compatible 和 @ai-sdk/react 包
 2. **环境配置**：支持5个AI模型的配置
 3. **聊天界面**：可以切换模型进行对话的首页
 

@@ -50,7 +50,8 @@
 
 **规范**:
 
-- 使用 `ai` 和 `@ai-sdk/openai-compatible` 包
+- 使用 `ai`、`@ai-sdk/openai-compatible` 和 `@ai-sdk/react` 包
+- React 应用中的 hooks（如 `useChat`、`useCompletion`）需要从 `@ai-sdk/react` 导入
 - 使用项目提供的 OpenAI proxy 配置
 - 当创建 AI 相关功能时，遵循 Vercel AI SDK v5 的最新 API 规范
 - 优先使用流式响应模式提高用户体验
