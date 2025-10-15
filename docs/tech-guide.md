@@ -95,6 +95,12 @@ DIRECT_URL="postgresql://..."       # 用于迁移的直连数据库连接
 
 **重要说明**: 项目使用 Vercel AI SDK v5，不使用 v4 版本。v5 的 API 与 v4 有重要差异，必须使用 v5 的正确方法。
 
+**统一 SDK 方法**: 所有 AI 相关功能都应使用 AI SDK 提供的统一方法，例如：
+
+- 文本生成：`streamText()` 和 `generateText()`
+- 语音转录：`experimental_transcribe()` 和 `openai.transcription()`
+- 其他 AI 功能也应使用对应的 SDK 方法，而不是直接调用各提供商的原生 API
+
 ### 依赖包安装
 
 ```bash
@@ -182,9 +188,7 @@ const { messages, status } = useChat();
 import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
 import { streamText, convertToModelMessages } from "ai";
 
-export const runtime = "edge";
-
-const ai = createOpenAICompatible({
+const openaiCompatible = createOpenAICompatible({
   name: "OpenAI Compatible",
   baseURL: process.env.OPENAI_BASE_URL!,
   apiKey: process.env.OPENAI_API_KEY!,
@@ -194,7 +198,7 @@ export async function POST(req: Request) {
   const { messages, model = "gpt-5" } = await req.json();
 
   const result = streamText({
-    model: ai(model),
+    model: openaiCompatible(model),
     messages: convertToModelMessages(messages), // 正确用法
     maxOutputTokens: 4000,
     temperature: 0.7,
@@ -219,7 +223,27 @@ const { messages, sendMessage, status } = useChat({
 });
 ```
 
-**支持的 AI 模型**: gpt-5, gpt-5-mini, gpt-5-nano, claude-sonnet-4
+### 其他 AI 功能示例
+
+**语音转录** (使用统一 SDK 方法):
+
+```typescript
+import { experimental_transcribe as transcribe } from "ai";
+import { createOpenAI } from "@ai-sdk/openai";
+import { readFile } from "fs/promises";
+
+const openai = createOpenAI({
+  baseURL: process.env.OPENAI_BASE_URL!,
+  apiKey: process.env.OPENAI_API_KEY!,
+});
+
+const { text } = await transcribe({
+  model: openai.transcription("whisper"),
+  audio: await readFile("audio.mp3"),
+});
+```
+
+**支持的 AI 模型**: gpt-5, gpt-5-mini, gpt-5-nano, claude-sonnet-4, whisper, gpt-4o-mini-transcribe
 
 ## 5. 服务端功能: Server Actions
 

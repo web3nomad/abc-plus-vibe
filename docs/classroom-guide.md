@@ -59,9 +59,69 @@ Claude Code 会：
 
 ---
 
-## 第二部分：AI SDK 配置和聊天界面
+## 第二部分：初始化 shadcn/ui 组件库
 
-### 步骤 3：安装 AI SDK 并配置模型
+### 步骤 3.5：配置 shadcn/ui
+
+在开始实现聊天界面之前，需要先初始化 shadcn/ui 组件库。学生可以选择使用 **Claude Code** 或直接在终端中执行。
+
+#### 使用 Claude Code 的方式
+
+学生在 Claude Code 中输入：
+
+```
+请帮我初始化 shadcn/ui 组件库，执行以下步骤：
+
+1. 运行初始化命令：pnpm dlx shadcn@latest init
+
+2. 配置选项请选择：
+- Would you like to use TypeScript? → Yes
+- Which style would you like to use? → New York
+- Which color would you like to use as base color? → Zinc
+- Where is your global CSS file? → src/app/globals.css
+- Would you like to use CSS variables for colors? → Yes
+- Where is your tailwind.config.js located? → tailwind.config.ts
+- Configure the import alias for components? → @/components
+- Configure the import alias for utils? → @/lib/utils
+
+3. 安装常用组件：
+- pnpm dlx shadcn@latest add button
+- pnpm dlx shadcn@latest add input
+- pnpm dlx shadcn@latest add card
+- pnpm dlx shadcn@latest add select
+- pnpm dlx shadcn@latest add form
+- pnpm dlx shadcn@latest add table
+```
+
+#### 直接在终端执行的方式
+
+如果学生选择直接操作，可以在项目目录中运行：
+
+```bash
+# 初始化 shadcn/ui
+pnpm dlx shadcn@latest init
+
+# 安装常用组件
+pnpm dlx shadcn@latest add button input card select form table
+```
+
+#### 初始化完成后的变化
+
+shadcn/ui 初始化会：
+
+1. **安装必要依赖**：`clsx`、`tailwind-merge`、`lucide-react` 等
+2. **创建工具函数**：`src/lib/utils.ts` 文件，包含 `cn()` 类名合并函数
+3. **更新全局样式**：`src/app/globals.css`，添加 CSS 变量和基础样式
+4. **创建配置文件**：`components.json` 配置文件
+5. **配置主题变量**：Tailwind CSS 主题变量和色彩系统
+
+**教学重点**：让学生理解组件库的作用，学会使用现代化的 UI 组件来构建界面，而不是从零开始写样式。
+
+---
+
+## 第三部分：AI SDK 配置和聊天界面
+
+### 步骤 4：安装 AI SDK 并配置模型
 
 学生可以选择使用 **Zed** 或 **Claude Code** 来完成这个步骤，也可以交叉使用两种工具。
 
@@ -124,9 +184,9 @@ pnpm add ai @ai-sdk/openai-compatible @ai-sdk/react
 
 ---
 
-## 第三部分：代码提交和测试
+## 第四部分：代码提交和测试
 
-### 步骤 4：规划和提交代码
+### 步骤 5：规划和提交代码
 
 这个步骤用于演示 Git 的使用。**切换到 Claude Code**，让 Claude 帮助规划提交。
 
@@ -157,7 +217,7 @@ Claude Code 会：
 6. 验证代码是否成功推送到 GitHub
 7. 提供 GitHub 仓库链接给学生查看
 
-### 步骤 5：创建 GitHub 仓库并推送
+### 步骤 6：创建 GitHub 仓库并推送
 
 这个步骤演示如何将本地代码发布到 GitHub：
 
@@ -174,7 +234,7 @@ Claude Code 会：
 
 **教学重点**：让学生理解本地 Git 和远程 GitHub 的关系，学会将代码发布到互联网上
 
-### 步骤 6：测试功能
+### 步骤 7：测试功能
 
 代码推送完成后，测试聊天功能：
 
@@ -185,9 +245,9 @@ Claude Code 会：
 
 ---
 
-## 第四部分：实现核心功能
+## 第五部分：实现核心功能
 
-### 步骤 7：配置 Supabase 数据库（可选扩展）
+### 步骤 8：配置 Supabase 数据库（可选扩展）
 
 #### Supabase 配置教学流程
 
@@ -240,7 +300,7 @@ DIRECT_URL="postgresql://postgres.[PROJECT_ID]:[YOUR-PASSWORD]@aws-1-us-east-2.p
 使用 Server Actions 演示数据库操作。
 ```
 
-### 步骤 8：实现音频素材库
+### 步骤 9：实现音频素材库
 
 学生输入以下完整需求：
 
