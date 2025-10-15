@@ -88,9 +88,17 @@ OPENAI_API_KEY=待上课时候补充
 - 支持切换 4 个模型：gpt-5, gpt-5-mini, gpt-5-nano, claude-sonnet-4
 - 实现流式对话功能
 - 添加模型选择器组件
+- 使用 shadcn/ui 组件库构建界面（Button、Input、Select、Card 等组件）
 ```
 
-如果遇到问题，和 claude code 一起调试程序的方法：`请运行 pnpm build，并修复问题`
+**开发和调试技巧**
+
+与 Claude Code 协作开发时的实用方法：
+
+1. **构建和修复问题**：`请运行 pnpm build，并修复问题`
+2. **启动开发服务器**：让 Claude Code 运行 `pnpm dev`，会产生一个 `Background Task`
+3. **监控运行状态**：在 Claude Code 中按 ▼ 按键查看后台任务输出
+4. **错误处理**：过程中的错误会被 Claude 自动识别，可引导 Claude 输出更多调试日志
 
 #### 使用 Zed 的方式
 
@@ -104,15 +112,15 @@ pnpm add ai @ai-sdk/openai-compatible @ai-sdk/react
 
 2. 在 Zed 中创建 `.env` 文件，添加环境变量
 
-3. 使用 Zed 的 AI 助手功能来帮助编写聊天界面代码
+3. 使用 Zed 的 AI 助手功能来帮助编写聊天界面代码，确保使用 shadcn/ui 组件库
 
 #### 预期结果
 
 完成后，学生将拥有：
 
 1. **AI SDK 依赖**：ai、@ai-sdk/openai-compatible 和 @ai-sdk/react 包
-2. **环境配置**：支持5个AI模型的配置
-3. **聊天界面**：可以切换模型进行对话的首页
+2. **环境配置**：支持4个AI模型的配置
+3. **聊天界面**：基于 shadcn/ui 组件库构建的可以切换模型进行对话的首页
 
 ---
 
@@ -225,9 +233,9 @@ DIRECT_URL="postgresql://postgres.[PROJECT_ID]:[YOUR-PASSWORD]@aws-1-us-east-2.p
 4. 同步数据库并生成客户端
 
 然后实现一个简单的用户管理系统：
-- 姓名和邮箱输入表单
+- 使用 shadcn/ui 组件构建姓名和邮箱输入表单（Form、Input、Button 组件）
 - 保存用户信息到数据库
-- 页面显示用户列表
+- 使用 shadcn/ui 的 Table 或 Card 组件显示用户列表
 
 使用 Server Actions 演示数据库操作。
 ```
@@ -242,6 +250,8 @@ DIRECT_URL="postgresql://postgres.[PROJECT_ID]:[YOUR-PASSWORD]@aws-1-us-east-2.p
 使用 serveraction 进行后端功能实现。
 
 请使用 Vercel AI SDK 实现 AI 功能，（注意：此时环境变量已在第二部分配置完成）
+
+界面请使用 shadcn/ui 组件库构建，确保界面美观和一致性。
 
 ### 功能要求说明
 
