@@ -59,9 +59,31 @@ Claude Code 会：
 
 ---
 
-## 第二部分：初始化 shadcn/ui 组件库
+## 第二部分：基础的**Terminal / 终端**命令
 
-### 步骤 3.5：配置 shadcn/ui
+```bash
+# 进入我的个人目录
+cd ~
+
+# 查看目录下的文件和文件夹
+ls -al
+# 或
+ls
+# 或
+l
+
+# 进入一个具体的目录 (个人目录下的 workspace 目录)
+cd ~/workspace
+
+# 回到上一级目录
+cd ..
+```
+
+---
+
+## 第三部分：初始化 shadcn/ui 组件库
+
+### 配置 shadcn/ui
 
 在开始实现聊天界面之前，需要先初始化 shadcn/ui 组件库。学生可以选择使用 **Claude Code** 或直接在终端中执行。
 
@@ -119,9 +141,9 @@ shadcn/ui 初始化会：
 
 ---
 
-## 第三部分：AI SDK 配置和聊天界面
+## 第四部分：AI SDK 配置和聊天界面
 
-### 步骤 4：安装 AI SDK 并配置模型
+### 步骤 1：安装 AI SDK 并配置模型
 
 学生可以选择使用 **Zed** 或 **Claude Code** 来完成这个步骤，也可以交叉使用两种工具。
 
@@ -155,10 +177,18 @@ OPENAI_API_KEY=待上课时候补充
 
 与 Claude Code 协作开发时的实用方法：
 
-1. **构建和修复问题**：`请运行 pnpm build，并修复问题`
-2. **启动开发服务器**：让 Claude Code 运行 `pnpm dev`，会产生一个 `Background Task`
-3. **监控运行状态**：在 Claude Code 中按 ▼ 按键查看后台任务输出
-4. **错误处理**：过程中的错误会被 Claude 自动识别，可引导 Claude 输出更多调试日志
+**程序无法跑起来的时候使用**
+
+- 构建和修复问题: `请运行 pnpm build，并修复问题`
+
+**运行程序**
+
+- 启动开发服务器: 让 Claude Code 运行 `pnpm dev`，会产生一个 `Background Task`
+- 监控运行状态: 在 Claude Code 中按 ▼ 按键查看后台任务输出
+
+**运行以后解决功能问题**
+
+- 错误处理: 过程中的错误会被 Claude 自动识别，可引导 Claude 输出更多调试日志
 
 #### 使用 Zed 的方式
 
@@ -184,9 +214,9 @@ pnpm add ai @ai-sdk/openai-compatible @ai-sdk/react
 
 ---
 
-## 第四部分：代码提交和测试
+## 第五部分：代码提交和测试
 
-### 步骤 5：规划和提交代码
+### 步骤 1：规划和提交代码
 
 这个步骤用于演示 Git 的使用。**切换到 Claude Code**，让 Claude 帮助规划提交。
 
@@ -217,7 +247,7 @@ Claude Code 会：
 6. 验证代码是否成功推送到 GitHub
 7. 提供 GitHub 仓库链接给学生查看
 
-### 步骤 6：创建 GitHub 仓库并推送
+### 步骤 2：创建 GitHub 仓库并推送
 
 这个步骤演示如何将本地代码发布到 GitHub：
 
@@ -234,7 +264,7 @@ Claude Code 会：
 
 **教学重点**：让学生理解本地 Git 和远程 GitHub 的关系，学会将代码发布到互联网上
 
-### 步骤 7：测试功能
+### 步骤 3：测试功能
 
 代码推送完成后，测试聊天功能：
 
@@ -245,9 +275,9 @@ Claude Code 会：
 
 ---
 
-## 第五部分：实现核心功能
+## 第六部分：实现核心功能
 
-### 步骤 8：配置 Supabase 数据库（可选扩展）
+### 步骤 1：配置 Supabase 数据库（可选扩展）
 
 #### Supabase 配置教学流程
 
@@ -300,7 +330,7 @@ DIRECT_URL="postgresql://postgres.[PROJECT_ID]:[YOUR-PASSWORD]@aws-1-us-east-2.p
 使用 Server Actions 演示数据库操作。
 ```
 
-### 步骤 9：实现音频素材库
+### 步骤 2：实现音频素材库
 
 学生输入以下完整需求：
 
@@ -343,6 +373,8 @@ Claude Code 会实现以下功能：
 - **shadcn/ui**: UI 组件使用 shadcn/ui 组件库
 - **文件存储**: 音频文件存储在 public/uploads 目录
 ```
+
+---
 
 ---
 
